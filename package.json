@@ -1,7 +1,6 @@
 {
     "name": "serratec-api",
     "version": "1.0.0",
-    "private": true,
     "description": "Serratec API",
     "main": "index.js",
     "engines": {
