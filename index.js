@@ -5,6 +5,7 @@ const { pool } = require("./config");
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
 
 const getAlunos = (request, response) => {
@@ -18,9 +19,10 @@ const getAlunos = (request, response) => {
 
 
 const addAluno = (request, response) => {
+  console.log(request.body)
   const { nome, cidade, idade } = request.body
 
-  pool.query('INSERT INTO alunos (nome, cidade, idade) VALUES ($1, $2, $3)', [nome, cidade, idade], error => {
+  pool.query(`INSERT INTO alunos (nome, cidade, idade) VALUES ('${nome}', '${cidade}', ${idade})`, error => {
     if (error) {
       throw error
     }
