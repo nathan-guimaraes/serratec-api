@@ -17,24 +17,71 @@ const getAlunos = (request, response) => {
   });
 };
 
-
 const addAluno = (request, response) => {
-  console.log(request.body)
-  const { nome, cidade, idade } = request.body
+  console.log(request.body);
+  const { nome, cidade, idade } = request.body;
 
-  pool.query(`INSERT INTO alunos (nome, cidade, idade) VALUES ('${nome}', '${cidade}', ${idade})`, error => {
-    if (error) {
-      throw error
+  pool.query(
+    `INSERT INTO alunos (nome, cidade, idade) VALUES ('${nome}', '${cidade}', ${idade})`,
+    (error) => {
+      if (error) {
+        throw error;
+      }
+      response
+        .status(201)
+        .json({ status: "success", message: "Aluno adicionado." });
     }
-    response.status(201).json({ status: 'success', message: 'Aluno adicionado.' })
-  })
-}
+  );
+};
+
+const editAluno = (request, response) => {
+  console.log(request.body);
+  const { id, nome, cidade, idade } = request.body;
+
+  pool.query(
+    `update alunos set
+      nome = '${nome}',
+      cidade = '${cidade}',
+      idade = ${idade}
+      where id = ${id}`,
+    (error) => {
+      if (error) {
+        throw error;
+      }
+      response
+        .status(204)
+        .json({ status: "success", message: "Aluno editado." });
+    }
+  );
+};
+
+const removeAluno = (request, response) => {
+  const { id } = request.body;
+
+  pool.query(
+    `delete from alunos
+      where id = ${id}`,
+    (error) => {
+      if (error) {
+        throw error;
+      }
+      response
+        .status(202)
+        .json({ status: "success", message: "Aluno deletado." });
+    }
+  );
+};
 
 const health = (request, response) => {
   response.status(200).json("Serviço funcionando!");
 };
 
-app.route("/alunos").get(getAlunos).post(addAluno)
+app
+  .route("/alunos")
+  .get(getAlunos)
+  .post(addAluno)
+  .put(editAluno)
+  .delete(removeAluno);
 app.route("/health").get(health);
 
 // Start server
