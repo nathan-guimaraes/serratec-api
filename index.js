@@ -105,7 +105,7 @@ const editMateria = (request, response) => {
   pool.query(
     `update materias set
       titulo = '${titulo}',
-      professor_nome = ${professor_nome}
+      professor_nome = '${professor_nome}'
      where id = ${id}`,
     (error) => {
       if (error) {
