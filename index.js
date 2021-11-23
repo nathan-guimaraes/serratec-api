@@ -49,7 +49,7 @@ const editAluno = (request, response) => {
         throw error;
       }
       response
-        .status(204)
+        .status(201)
         .json({ status: "success", message: "Aluno editado." });
     }
   );
@@ -112,7 +112,7 @@ const editMateria = (request, response) => {
         throw error;
       }
       response
-        .status(204)
+        .status(201)
         .json({ status: "success", message: "Matéria editada." });
     }
   );
